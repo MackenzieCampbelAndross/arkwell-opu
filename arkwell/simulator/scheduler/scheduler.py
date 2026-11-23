@@ -50,31 +50,21 @@ class SafeConcurrentScheduler:
         )
 
         batches: List[List[CandidateUpdate]] = []
-        assigned = [False] * k
+        assigned = np.zeros(k, dtype=bool)
 
         for idx in order:
             if assigned[idx]:
                 continue
 
-            # Start a new safe batch with idx
             current_batch_indices = [idx]
             assigned[idx] = True
+            incompatible = conflict_mat[idx].copy()
 
-            # Greedily search remaining unassigned candidates compatible with all members in current_batch
             for candidate_idx in order:
-                if assigned[candidate_idx]:
-                    continue
-
-                # Check if candidate_idx conflicts with any candidate already in current_batch
-                conflicts_with_batch = False
-                for b_member in current_batch_indices:
-                    if conflict_mat[candidate_idx, b_member]:
-                        conflicts_with_batch = True
-                        break
-
-                if not conflicts_with_batch:
+                if not assigned[candidate_idx] and not incompatible[candidate_idx]:
                     current_batch_indices.append(candidate_idx)
                     assigned[candidate_idx] = True
+                    incompatible |= conflict_mat[candidate_idx]
 
             batches.append([candidates[i] for i in current_batch_indices])
 
