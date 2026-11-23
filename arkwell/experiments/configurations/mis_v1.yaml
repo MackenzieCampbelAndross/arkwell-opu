@@ -1,0 +1,59 @@
+# Arkwell Benchmark Suite (ABS V1.0)
+# Experiment Configuration: Maximum Independent Set (MIS) V1.0
+
+experiment_name: "abs_v1_mis_screening"
+workload: "maximum_independent_set"
+version: "1.0.0"
+
+# Target Problem Instances
+problem_sizes:
+  - 128
+  - 256
+  - 512
+  - 1024
+
+densities:
+  - 0.02
+  - 0.10
+  - 0.30
+
+# Deterministic random seeds for reproducibility
+random_seeds:
+  - 42
+  - 101
+  - 2024
+  - 777
+  - 999
+
+# Experimental Configurations
+configurations:
+  - "A"  # Sequential Local Search (Reference)
+  - "B"  # Naive Parallel Local Search
+  - "C"  # Conflict-Aware Scheduling
+  - "D"  # Conflict-Aware Scheduling with Selective Propagation
+
+# Simulated Processing Elements
+processing_elements:
+  - 1
+  - 2
+  - 4
+  - 8
+  - 16
+  - 32
+
+# Execution Parameters
+max_iterations: 10000
+timeout_seconds: 60.0
+verify_every_solution: true
+
+# Backend settings
+backends:
+  cpu: true
+  gpu: true
+  gpu_fallback_to_cpu: true
+
+# Output Paths
+outputs:
+  results_csv: "arkwell/experiments/raw_results/mis_v1_results.csv"
+  results_json: "arkwell/experiments/raw_results/mis_v1_results.json"
+  logs_dir: "arkwell/experiments/logs"

@@ -1,0 +1,50 @@
+# Symlink / mirror of arkwell/experiments/configurations/mis_v1.yaml
+experiment_name: "abs_v1_mis_screening"
+workload: "maximum_independent_set"
+version: "1.0.0"
+
+problem_sizes:
+  - 128
+  - 256
+  - 512
+  - 1024
+
+densities:
+  - 0.02
+  - 0.10
+  - 0.30
+
+random_seeds:
+  - 42
+  - 101
+  - 2024
+  - 777
+  - 999
+
+configurations:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+
+processing_elements:
+  - 1
+  - 2
+  - 4
+  - 8
+  - 16
+  - 32
+
+max_iterations: 10000
+timeout_seconds: 60.0
+verify_every_solution: true
+
+backends:
+  cpu: true
+  gpu: true
+  gpu_fallback_to_cpu: true
+
+outputs:
+  results_csv: "arkwell/experiments/raw_results/mis_v1_results.csv"
+  results_json: "arkwell/experiments/raw_results/mis_v1_results.json"
+  logs_dir: "arkwell/experiments/logs"
